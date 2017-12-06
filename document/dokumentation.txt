@@ -1,0 +1,38 @@
+Erstellen eine Datei:
+---------------------
+
+- Adresse <<server>>:<<port>>/create
+  + Parameter key1 bis key[n] 
+  zbsp.: http://localhost:8080/create?key1=k1&key2=k2
+- Anwort
+  Nachricht mit Token
+
+Einfügen von Daten:
+-------------------
+
+- Adresse <<server>>:<<port>>/insert
+ + Parameter 
+    - token
+    - key1 bis k[n]
+  zbsp.: http://localhost:8080/insert?token=0321c4&k1=123&k2=345
+- Antwort
+  Zeichenkette
+
+Laden von Daten:
+----------------
+
+- Adresse <<server>>:<<port>>/get
+ + Parameter token
+ zbsp.: http://localhost:8080/get/?token=0321c4
+- Antwort
+  JSON mit den Werten
+
+Auflisten von Dateien:
+----------------------
+
+- Adresse <<server>>:<<port>>/list
+ + Parameter keine
+ zbsp.: http://localhost:8080/list
+-Antwort
+ Zeichenkette mit einer Liste von Dateinamen wobei der Dateiname (ohne Suffix) der Token ist.
+ 
