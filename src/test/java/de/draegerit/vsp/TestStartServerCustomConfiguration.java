@@ -1,5 +1,6 @@
 package de.draegerit.vsp;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class TestStartServerCustomConfiguration {
     boolean isStarted = server.start();
     assertTrue(isStarted);
     int currentServerPort = server.getPort();
-    assertTrue(String.format("aktueller Server Port [%d] ist nicht [%d]", currentServerPort, PORT),
+    assertFalse(String.format("aktueller Server Port [%d] ist nicht [%d]", currentServerPort, PORT),
         server.getPort() == PORT);
 
     String currentShutdownPwd = server.getCustomShutDownPassword();

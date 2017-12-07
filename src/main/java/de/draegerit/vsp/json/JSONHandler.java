@@ -12,7 +12,12 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class JSONHandler {
+
+  private static Logger logger = LoggerFactory.getLogger("JSONHandler.class");
 
   private static final String LINE_BREAK = "\r\n";
 
@@ -31,7 +36,7 @@ public final class JSONHandler {
       bw.write(new Gson().toJson(item));
       bw.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), e);
     }
   }
 
@@ -53,7 +58,7 @@ public final class JSONHandler {
         json.append(LINE_BREAK);
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), e);
     }
     return json.toString();
   }
@@ -64,7 +69,7 @@ public final class JSONHandler {
       bw.write(new Gson().toJson(item));
       bw.flush();
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), e);
     }
   }
 }

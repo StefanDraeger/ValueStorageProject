@@ -24,9 +24,12 @@ public class TestCreateStorage extends TestDefaultServer {
     String url = HTTP_URL.concat("?key1=k1&key2=k2");
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
-    assertTrue(response.trim().startsWith("{\"text\":\"Create successfull"));
-
-    File file = new File("./output/0321c4.json");
+    assertTrue(response.trim().startsWith("{\"text\":\"Create successfull"));    
+  }
+  
+  @Test
+  public void testForTestCaseStorage() {
+    File file = new File("./output/testcase.json");
     assertTrue(file.exists());
   }
 

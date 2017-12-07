@@ -14,7 +14,7 @@ public class TestGetStorage extends TestDefaultServer {
 
   @Test
   public void testGetStorage() {
-    String url = "http://localhost:8080/get/?token=0321c4";
+    String url = "http://localhost:8080/get/?token=testcase";
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
     StorageItem item = new Gson().fromJson(response, StorageItem.class);
@@ -32,7 +32,7 @@ public class TestGetStorage extends TestDefaultServer {
 
   @Test
   public void testGetStorageTokenNotFound() {
-    String url = "http://localhost:8080/get/?token=1234";
+    String url = "http://localhost:8080/get/?token=testcase";
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
     assertFalse(response

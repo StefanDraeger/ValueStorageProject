@@ -1,25 +1,19 @@
 package de.draegerit.vsp;
 
-import de.draegerit.vsp.handler.CreateStorageHandler;
-import de.draegerit.vsp.handler.DeleteHandler;
-import de.draegerit.vsp.handler.FilterHandler;
-import de.draegerit.vsp.handler.GetHandler;
-import de.draegerit.vsp.handler.HelloHandler;
-import de.draegerit.vsp.handler.InsertHandler;
-import de.draegerit.vsp.handler.ListHandler;
-import de.draegerit.vsp.handler.StopServerHandler;
+import de.draegerit.vsp.handler.factory.ContextHandlerFactoryImpl;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VSPServer {
+
+  private static Logger logger = LoggerFactory.getLogger("VSPServer.class");
 
   static final int DEFAULT_PORT = 8080;
 
@@ -33,6 +27,9 @@ public class VSPServer {
     initServer(port);
   }
 
+  /**
+   * Konstruktor
+   */
   public VSPServer() {
     this(DEFAULT_PORT);
   }
@@ -43,77 +40,66 @@ public class VSPServer {
         (shutdownPwd != null) && (!shutdownPwd.isEmpty()) ? shutdownPwd : DEFAULT_SHUTDOWN_PWD);
   }
 
+  /**
+   * Initialisiert den Server.
+   *
+   * @param port
+   *          - der Port über welchen der Server erreichbar sein soll.
+   */
   private void initServer(int port) {
     server = new Server(port);
 
-    ContextHandler contextHello = new ContextHandler();
-    contextHello.setContextPath("/hello");
-    contextHello.setHandler(new HelloHandler());
-
-    ContextHandler contextCreate = new ContextHandler();
-    contextCreate.setContextPath("/create");
-    contextCreate.setHandler(new CreateStorageHandler());
-
-    ContextHandler contextInsert = new ContextHandler();
-    contextInsert.setContextPath("/insert");
-    contextInsert.setHandler(new InsertHandler());
-
-    ContextHandler contextStop = new ContextHandler();
-    contextStop.setContextPath("/stop");
-    contextStop.setHandler(new StopServerHandler(this));
-
-    ContextHandler contextList = new ContextHandler();
-    contextList.setContextPath("/list");
-    contextList.setHandler(new ListHandler());
-
-    ContextHandler contextGet = new ContextHandler();
-    contextGet.setContextPath("/get");
-    contextGet.setHandler(new GetHandler());
-
-    ContextHandler contextDelete = new ContextHandler();
-    contextDelete.setContextPath("/delete");
-    contextDelete.setHandler(new DeleteHandler());
-
-    ContextHandler contextFilter = new ContextHandler();
-    contextFilter.setContextPath("/filter");
-    contextFilter.setHandler(new FilterHandler());
-
     ContextHandlerCollection contexts = new ContextHandlerCollection();
-    contexts.setHandlers(new Handler[] {contextHello, contextCreate, contextInsert, contextStop, contextList,
-        contextGet, contextDelete, contextFilter });
+    contexts.setHandlers(new ContextHandlerFactoryImpl().getAllContextHandler(this));
 
     server.setHandler(contexts);
   }
 
+  /**
+   * Startet den Server.
+   *
+   * @return liefert Boolean.TRUE wenn der Server erfolgreich gestartet wurde.
+   */
   final boolean start() {
     boolean result = false;
     try {
       server.start();
       result = true;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), e);
     }
     return result;
   }
 
+  /**
+   * Liefert den Port über welchen der Server gestartet wurde.
+   *
+   * @return primitiver Integer Wert mit dem Port.
+   */
   public final int getPort() {
-    List<Connector> connectors = Arrays.asList(server.getConnectors());
-    for (Connector c : connectors) {
+    for (Connector c : Arrays.asList(server.getConnectors())) {
       if (c instanceof ServerConnector) {
-        ServerConnector serverConnector = (ServerConnector) c;
-        return serverConnector.getLocalPort();
+        try (ServerConnector serverConnector = (ServerConnector) c;) {
+          return serverConnector.getLocalPort();
+        }
       }
     }
     return 0;
   }
 
+  /**
+   * Stoppt den Server, und liefert Boolean.TRUE wenn der Server erfolgreich
+   * gestoppt wurde.
+   *
+   * @return Boolean.TRUE wenn der Server erfolgreich gestoppt wurde
+   */
   public final boolean stop() {
     boolean result = false;
     try {
       server.stop();
       result = true;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error(e.getMessage(), e);
     }
     return result;
   }

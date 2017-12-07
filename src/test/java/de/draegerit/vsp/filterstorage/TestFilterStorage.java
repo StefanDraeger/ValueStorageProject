@@ -19,7 +19,7 @@ public class TestFilterStorage extends TestDefaultServer {
 
   @Test
   public void testFilterStorageTimeFromAndTimeTo() {
-    String url = "http://localhost:8080/filter?token=0321c4&timeFrom=1&timeTo=1512376345048";
+    String url = "http://localhost:8080/filter?token=testcase&timeFrom=1&timeTo=1512635701117";
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
     assertFalse(getListFromResponse(response).isEmpty());
@@ -27,7 +27,7 @@ public class TestFilterStorage extends TestDefaultServer {
 
   @Test
   public void testFilterStorageTimeFrom() {
-    String url = "http://localhost:8080/filter?token=0321c4&timeFrom=1512376345049";
+    String url = "http://localhost:8080/filter?token=testcase&timeFrom=1512635701116";
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
     assertFalse(getListFromResponse(response).isEmpty());
@@ -35,7 +35,7 @@ public class TestFilterStorage extends TestDefaultServer {
 
   @Test
   public void testFilterStorageTimeTo() {
-    String url = "http://localhost:8080/filter?token=0321c4&timeTo=1512376345049";
+    String url = "http://localhost:8080/filter?token=testcase&timeTo=1512635701118";
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
     assertFalse(getListFromResponse(response).isEmpty());

@@ -1,5 +1,6 @@
 package de.draegerit.vsp;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class TestStartServer extends TestDefaultServer {
   public void testPortConfiguration() {
     getServer().start();
     int currentServerPort = getServer().getPort();
-    assertTrue(String.format("aktueller Server Port [%d] ist nicht [%d]", currentServerPort, VSPServer.DEFAULT_PORT),
+    assertFalse(String.format("aktueller Server Port [%d] ist nicht [%d]", currentServerPort, VSPServer.DEFAULT_PORT),
         getServer().getPort() == VSPServer.DEFAULT_PORT);
   }
 }

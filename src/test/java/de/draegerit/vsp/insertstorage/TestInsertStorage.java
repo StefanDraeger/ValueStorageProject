@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class TestInsertStorage extends TestDefaultServer {
 
-  private static final String HTTP_URL = "http://localhost:8080/insert?token=0321c4";
+  private static final String HTTP_URL = "http://localhost:8080/insert?token=testcase";
 
   @Test
   public void testReachability() {
@@ -18,7 +18,7 @@ public class TestInsertStorage extends TestDefaultServer {
 
   @Test
   public void testInsert() {
-    String url = "http://localhost:8080/insert?token=0321c4&k1=123&k2=345";
+    String url = "http://localhost:8080/insert?token=testcase&k1=123&k2=345";
     String response = getServerResponse(url);
     assertTrue(!response.isEmpty());
     assertTrue(

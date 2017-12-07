@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-public abstract class AbstractVSPHandler extends AbstractHandler {
+public abstract class AbstractVSPHandler extends AbstractHandler { // NO_UCD (use default)
 
   public final void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
